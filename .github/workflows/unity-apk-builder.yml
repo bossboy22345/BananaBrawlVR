@@ -1,0 +1,30 @@
+name: Build Android APK
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build:
+    name: Build APK
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout project
+        uses: actions/checkout@v2
+
+      - name: Set up Unity
+        uses: game-ci/unity-installer@v3
+        with:
+          version: 2022.3.0f1
+
+      - name: Build Android APK
+        uses: game-ci/unity-builder@v2
+        with:
+          targetPlatform: Android
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
+        with:
+          name: BananaBrawlVR-APK
+          path: build/Android
